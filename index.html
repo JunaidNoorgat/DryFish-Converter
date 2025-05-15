@@ -28,6 +28,7 @@
       color: var(--white);
       height: 100%;
       width: 100%;
+      overflow-x: hidden;
     }
 
     body {
@@ -35,6 +36,7 @@
       flex-direction: column;
       align-items: center;
       animation: fadeIn 1.5s ease-in-out;
+      position: relative;
     }
 
     header {
@@ -48,32 +50,7 @@
       justify-content: center;
       position: relative;
       border-bottom: 3px solid var(--gold);
-    }
-
-    .logo-container {
-      width: 110px;
-      height: 110px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: radial-gradient(circle, var(--navy) 0%, var(--deep-blue) 100%);
-      border-radius: 50%;
-      border: 3px solid var(--gold);
-      box-shadow: 0 0 25px rgba(250, 204, 21, 0.5);
-      padding: 15px;
-      transition: all 0.3s ease;
-    }
-
-    .logo-container:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 35px rgba(250, 204, 21, 0.7);
-    }
-
-    .fish-logo {
-      width: 100%;
-      height: auto;
-      filter: drop-shadow(0 0 10px rgba(250, 204, 21, 0.7));
-      animation: swim 3s ease-in-out infinite;
+      z-index: 10;
     }
 
     h1 {
@@ -103,6 +80,7 @@
       padding: 2rem;
       width: 100%;
       max-width: 500px;
+      z-index: 5;
     }
 
     .converter-card {
@@ -193,19 +171,87 @@
       background-size: contain;
     }
 
+    /* Swimming fish with banner */
+    .swimming-fish {
+      position: fixed;
+      top: 20%;
+      left: -200px;
+      width: 180px;
+      height: 80px;
+      z-index: 2;
+      animation: swimAcross 20s linear infinite;
+      pointer-events: none;
+    }
+
+    .fish-with-banner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .banner-fish {
+      width: 60px;
+      height: auto;
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .banner-text {
+      position: absolute;
+      left: 70px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(30, 58, 138, 0.8);
+      color: var(--gold);
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      white-space: nowrap;
+      border: 1px solid var(--gold);
+    }
+
+    /* Small decorative fish */
+    .small-fish {
+      position: absolute;
+      width: 40px;
+      opacity: 0.15;
+      filter: drop-shadow(0 0 5px var(--gold));
+      z-index: 1;
+    }
+
+    .fish-1 {
+      top: 30%;
+      right: 10%;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .fish-2 {
+      bottom: 25%;
+      left: 10%;
+      animation: float 8s ease-in-out infinite 1s;
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(-20px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    @keyframes swim {
-      0%, 100% { transform: translateX(0) rotate(-5deg); }
-      50% { transform: translateX(10px) rotate(5deg); }
+    @keyframes swimAcross {
+      0% { transform: translateX(-200px); }
+      100% { transform: translateX(calc(100vw + 200px)); }
     }
 
     @keyframes bounce {
       0%, 100% { transform: translateY(0) scale(1); }
       50% { transform: translateY(-10px) scale(1.1); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(10deg); }
+      50% { transform: translateY(-20px) rotate(-5deg); }
     }
 
     @media (max-width: 768px) {
@@ -226,13 +272,22 @@
         font-size: 1.8rem;
       }
       
-      .logo-container {
-        width: 90px;
-        height: 90px;
-      }
-      
       .converter-card {
         padding: 2rem;
+      }
+
+      .swimming-fish {
+        top: 15%;
+        width: 150px;
+      }
+
+      .banner-fish {
+        width: 50px;
+      }
+
+      .banner-text {
+        font-size: 0.8rem;
+        left: 60px;
       }
     }
 
@@ -245,37 +300,44 @@
       input {
         padding: 1rem;
       }
+
+      .swimming-fish {
+        top: 10%;
+        width: 130px;
+        animation-duration: 15s;
+      }
+
+      .small-fish {
+        width: 30px;
+      }
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="logo-container">
-      <!-- Premium SVG Fish Logo -->
-      <svg class="fish-logo" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
-        <!-- Fish body -->
+  <!-- Swimming fish with banner -->
+  <div class="swimming-fish">
+    <div class="fish-with-banner">
+      <svg class="banner-fish" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
         <path d="M180,50 Q160,10 100,20 Q60,25 40,50 Q20,75 60,80 Q100,85 160,90 Q180,90 180,50" 
-              fill="url(#fishGradient)" stroke="#1e3a8a" stroke-width="3"/>
-        <!-- Eye -->
+              fill="#7dd3fc" stroke="#1e3a8a" stroke-width="2"/>
         <circle cx="160" cy="45" r="5" fill="#1e3a8a"/>
-        <circle cx="160" cy="45" r="2" fill="#f8fafc"/>
-        <!-- Tail details -->
         <path d="M20,50 Q25,40 30,50 Q25,60 20,50" fill="#1e3a8a"/>
-        <!-- Gills -->
         <path d="M60,45 L40,45 L30,50 L40,55 L60,55" fill="#fb7185"/>
-        <!-- Scales -->
-        <path d="M140,60 Q135,55 130,60 Q135,65 140,60" fill="rgba(250,204,21,0.3)"/>
-        <path d="M130,55 Q125,50 120,55 Q125,60 130,55" fill="rgba(250,204,21,0.3)"/>
-        <path d="M120,65 Q115,60 110,65 Q115,70 120,65" fill="rgba(250,204,21,0.3)"/>
-        
-        <defs>
-          <linearGradient id="fishGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#facc15" />
-            <stop offset="100%" stop-color="#fbbf24" />
-          </linearGradient>
-        </defs>
       </svg>
+      <div class="banner-text">@Junbunz2025</div>
     </div>
+  </div>
+
+  <!-- Small decorative fish -->
+  <svg class="small-fish fish-1" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+    <path d="M30,50 Q50,30 70,50 Q50,70 30,50" fill="#facc15"/>
+  </svg>
+  
+  <svg class="small-fish fish-2" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+    <path d="M30,50 Q50,30 70,50 Q50,70 30,50" fill="#facc15"/>
+  </svg>
+
+  <header>
     <h1>Dry Fish Converter</h1>
   </header>
 
@@ -315,16 +377,19 @@
       document.getElementById("grams").value = grams;
     }
 
-    // Add micro-interaction to logo on load
-    document.addEventListener('DOMContentLoaded', () => {
-      const logo = document.querySelector('.logo-container');
-      setTimeout(() => {
-        logo.style.transform = 'scale(1.1)';
-        setTimeout(() => {
-          logo.style.transform = 'scale(1)';
-        }, 300);
-      }, 500);
-    });
+    // Randomize swimming fish position on mobile
+    function randomizeFishPosition() {
+      if (window.innerWidth <= 768) {
+        const fish = document.querySelector('.swimming-fish');
+        const randomPosition = Math.floor(Math.random() * 30) + 10; // Between 10% and 40%
+        fish.style.top = `${randomPosition}%`;
+      }
+    }
+
+    // Randomize position every swim cycle
+    document.querySelector('.swimming-fish').addEventListener('animationiteration', randomizeFishPosition);
+    window.addEventListener('resize', randomizeFishPosition);
+    randomizeFishPosition(); // Initialize position
   </script>
 </body>
 </html>
