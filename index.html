@@ -102,13 +102,13 @@
       font-weight: 600;
       white-space: nowrap;
       border: 1px solid var(--gold);
-      order: 1; /* Banner in front */
+      order: 1;
     }
 
     .banner-fish {
       width: 40px;
       height: auto;
-      order: 2; /* Fish behind */
+      order: 2;
     }
 
     .converter {
@@ -132,11 +132,24 @@
                   inset 0 0 20px rgba(56, 189, 248, 0.2);
       width: 100%;
       position: relative;
+      overflow: hidden;
+    }
+
+    /* Mermaid elements */
+    .mermaid {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      z-index: 2;
+      opacity: 0.7;
+      pointer-events: none;
+      animation-timing-function: linear;
     }
 
     .input-group {
       margin-bottom: 2rem;
       position: relative;
+      z-index: 3;
     }
 
     label {
@@ -159,6 +172,8 @@
       border: 2px solid var(--gold);
       transition: all 0.3s ease;
       box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+      position: relative;
+      z-index: 3;
     }
 
     input:focus {
@@ -179,6 +194,7 @@
       color: var(--light-blue);
       font-weight: 600;
       position: relative;
+      z-index: 3;
     }
 
     @keyframes fadeIn {
@@ -194,6 +210,11 @@
     @keyframes bounce {
       0%, 100% { transform: translateY(0) scale(1); }
       50% { transform: translateY(-10px) scale(1.1); }
+    }
+
+    @keyframes swimMermaid {
+      0% { transform: translateX(-50px) translateY(var(--start-y)) rotate(var(--start-rot)); }
+      100% { transform: translateX(calc(100% + 50px)) translateY(var(--end-y)) rotate(var(--end-rot)); }
     }
 
     @media (max-width: 768px) {
@@ -234,6 +255,11 @@
       .banner-fish {
         width: 35px;
       }
+
+      .mermaid {
+        width: 30px;
+        height: 30px;
+      }
     }
 
     @media (max-width: 480px) {
@@ -263,6 +289,11 @@
       .banner-fish {
         width: 30px;
       }
+
+      .mermaid {
+        width: 25px;
+        height: 25px;
+      }
     }
   </style>
 </head>
@@ -286,19 +317,23 @@
   </div>
 
   <div class="converter">
-    <div class="converter-card">
-      <div class="input-group">
-        <label for="grams">Grams:</label>
-        <input type="number" id="grams" placeholder="Enter grams" oninput="convertToRands()" />
-      </div>
-
-      <div class="input-group">
-        <label for="rands">Rands (R):</label>
-        <input type="number" id="rands" placeholder="Enter amount in R" oninput="convertToGrams()" />
-      </div>
+    <div class="converter-card" id="converterCard">
+      <!-- Mermaids will be added here by JavaScript -->
       
-      <div class="price-display">
-        Current rate: R120 per kg (R0.12 per gram)
+      <div class="converter-content">
+        <div class="input-group">
+          <label for="grams">Grams:</label>
+          <input type="number" id="grams" placeholder="Enter grams" oninput="convertToRands()" />
+        </div>
+
+        <div class="input-group">
+          <label for="rands">Rands (R):</label>
+          <input type="number" id="rands" placeholder="Enter amount in R" oninput="convertToGrams()" />
+        </div>
+        
+        <div class="price-display">
+          Current rate: R120 per kg (R0.12 per gram)
+        </div>
       </div>
     </div>
   </div>
@@ -318,6 +353,52 @@
       const grams = (rands / pricePerGram).toFixed(2);
       document.getElementById("grams").value = grams;
     }
+
+    // Create mermaids
+    function createMermaids() {
+      const card = document.getElementById('converterCard');
+      const cardRect = card.getBoundingClientRect();
+      const mermaidCount = 5;
+      
+      // Mermaid SVG
+      const mermaidSVG = `
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <path d="M50,10 Q60,30 50,50 Q40,30 50,10" fill="#f472b6"/> <!-- Hair -->
+          <circle cx="50" cy="35" r="15" fill="#f9a8d4"/> <!-- Head -->
+          <path d="M50,50 Q60,70 50,90 Q40,70 50,50" fill="#86efac"/> <!-- Tail -->
+          <circle cx="40" cy="30" r="3" fill="#1e3a8a"/> <!-- Eye -->
+          <circle cx="60" cy="30" r="3" fill="#1e3a8a"/> <!-- Eye -->
+        </svg>
+      `;
+      
+      for (let i = 0; i < mermaidCount; i++) {
+        const mermaid = document.createElement('div');
+        mermaid.className = 'mermaid';
+        mermaid.innerHTML = mermaidSVG;
+        
+        // Random properties
+        const startY = Math.random() * 80;
+        const endY = startY + (Math.random() * 40 - 20);
+        const duration = 15 + Math.random() * 15;
+        const delay = Math.random() * 10;
+        const startRot = Math.random() * 30 - 15;
+        const endRot = Math.random() * 30 - 15;
+        
+        // Apply styles
+        mermaid.style.setProperty('--start-y', `${startY}%`);
+        mermaid.style.setProperty('--end-y', `${endY}%`);
+        mermaid.style.setProperty('--start-rot', `${startRot}deg`);
+        mermaid.style.setProperty('--end-rot', `${endRot}deg`);
+        mermaid.style.animation = `swimMermaid ${duration}s linear ${delay}s infinite`;
+        mermaid.style.left = '0';
+        mermaid.style.top = '0';
+        
+        card.appendChild(mermaid);
+      }
+    }
+
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', createMermaids);
   </script>
 </body>
 </html>
