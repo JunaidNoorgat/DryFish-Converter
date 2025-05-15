@@ -71,6 +71,46 @@
       filter: drop-shadow(0 0 5px var(--coral));
     }
 
+    /* Fish banner container */
+    .fish-banner-container {
+      position: relative;
+      width: 100%;
+      height: 60px;
+      margin: 10px 0;
+      overflow: hidden;
+      z-index: 5;
+    }
+
+    /* Swimming fish with banner */
+    .swimming-fish {
+      position: absolute;
+      top: 50%;
+      left: -150px;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: swimAcross 12s linear infinite;
+    }
+
+    .banner-text {
+      background: rgba(30, 58, 138, 0.8);
+      color: var(--gold);
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      white-space: nowrap;
+      border: 1px solid var(--gold);
+      order: 1; /* Banner in front */
+    }
+
+    .banner-fish {
+      width: 40px;
+      height: auto;
+      order: 2; /* Fish behind */
+    }
+
     .converter {
       flex: 1;
       display: flex;
@@ -80,7 +120,7 @@
       padding: 2rem;
       width: 100%;
       max-width: 500px;
-      z-index: 5;
+      z-index: 1;
     }
 
     .converter-card {
@@ -92,54 +132,6 @@
                   inset 0 0 20px rgba(56, 189, 248, 0.2);
       width: 100%;
       position: relative;
-      overflow: hidden;
-    }
-
-    .converter-content {
-      position: relative;
-      z-index: 1;
-    }
-
-    /* Swimming fish with banner - now on top of card */
-    .swimming-fish {
-      position: absolute;
-      top: 50%;
-      left: -100px;
-      width: 100px;
-      height: 50px;
-      z-index: 6; /* Above the card */
-      animation: swimAcross 15s linear infinite;
-      pointer-events: none;
-    }
-
-    .fish-with-banner {
-      position: relative;
-      width: 100%;
-      height: 100%;
-    }
-
-    .banner-fish {
-      width: 50px;
-      height: auto;
-      position: absolute;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-
-    .banner-text {
-      position: absolute;
-      left: 55px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(30, 58, 138, 0.8);
-      color: var(--gold);
-      padding: 3px 10px;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      white-space: nowrap;
-      border: 1px solid var(--gold);
     }
 
     .input-group {
@@ -195,8 +187,8 @@
     }
 
     @keyframes swimAcross {
-      0% { transform: translateX(-100px); }
-      100% { transform: translateX(calc(100vw + 100px)); }
+      0% { transform: translateX(-150px) translateY(-50%); }
+      100% { transform: translateX(calc(100vw + 150px)) translateY(-50%); }
     }
 
     @keyframes bounce {
@@ -226,18 +218,21 @@
         padding: 2rem;
       }
 
-      .swimming-fish {
-        width: 80px;
-        height: 40px;
+      .fish-banner-container {
+        height: 50px;
       }
 
-      .banner-fish {
-        width: 40px;
+      .swimming-fish {
+        left: -120px;
       }
 
       .banner-text {
-        left: 45px;
-        font-size: 0.7rem;
+        font-size: 0.8rem;
+        padding: 4px 12px;
+      }
+
+      .banner-fish {
+        width: 35px;
       }
     }
 
@@ -251,18 +246,35 @@
         padding: 1rem;
       }
 
+      .fish-banner-container {
+        height: 45px;
+      }
+
       .swimming-fish {
-        width: 70px;
-        height: 35px;
-        animation-duration: 12s;
+        left: -100px;
+        animation-duration: 10s;
+      }
+
+      .banner-text {
+        font-size: 0.7rem;
+        padding: 3px 10px;
+      }
+
+      .banner-fish {
+        width: 30px;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Swimming fish with banner - now positioned absolutely in body -->
-  <div class="swimming-fish">
-    <div class="fish-with-banner">
+  <header>
+    <h1>Dry Fish Converter</h1>
+  </header>
+
+  <!-- Fish banner area -->
+  <div class="fish-banner-container">
+    <div class="swimming-fish">
+      <div class="banner-text">@Junbunz2025</div>
       <svg class="banner-fish" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
         <path d="M180,50 Q160,10 100,20 Q60,25 40,50 Q20,75 60,80 Q100,85 160,90 Q180,90 180,50" 
               fill="#7dd3fc" stroke="#1e3a8a" stroke-width="2"/>
@@ -270,30 +282,23 @@
         <path d="M20,50 Q25,40 30,50 Q25,60 20,50" fill="#1e3a8a"/>
         <path d="M60,45 L40,45 L30,50 L40,55 L60,55" fill="#fb7185"/>
       </svg>
-      <div class="banner-text">@Junbunz2025</div>
     </div>
   </div>
 
-  <header>
-    <h1>Dry Fish Converter</h1>
-  </header>
-
   <div class="converter">
     <div class="converter-card">
-      <div class="converter-content">
-        <div class="input-group">
-          <label for="grams">Grams:</label>
-          <input type="number" id="grams" placeholder="Enter grams" oninput="convertToRands()" />
-        </div>
+      <div class="input-group">
+        <label for="grams">Grams:</label>
+        <input type="number" id="grams" placeholder="Enter grams" oninput="convertToRands()" />
+      </div>
 
-        <div class="input-group">
-          <label for="rands">Rands (R):</label>
-          <input type="number" id="rands" placeholder="Enter amount in R" oninput="convertToGrams()" />
-        </div>
-        
-        <div class="price-display">
-          Current rate: R120 per kg (R0.12 per gram)
-        </div>
+      <div class="input-group">
+        <label for="rands">Rands (R):</label>
+        <input type="number" id="rands" placeholder="Enter amount in R" oninput="convertToGrams()" />
+      </div>
+      
+      <div class="price-display">
+        Current rate: R120 per kg (R0.12 per gram)
       </div>
     </div>
   </div>
@@ -313,25 +318,6 @@
       const grams = (rands / pricePerGram).toFixed(2);
       document.getElementById("grams").value = grams;
     }
-
-    // Randomize swimming fish vertical position
-    function randomizeFishPosition() {
-      const fish = document.querySelector('.swimming-fish');
-      const card = document.querySelector('.converter-card');
-      const cardRect = card.getBoundingClientRect();
-      
-      // Position fish vertically within the card area
-      const minTop = cardRect.top + 20;
-      const maxTop = cardRect.bottom - 50;
-      const randomTop = Math.floor(Math.random() * (maxTop - minTop)) + minTop;
-      
-      fish.style.top = `${randomTop}px`;
-    }
-
-    // Initialize and randomize on resize and animation iteration
-    document.addEventListener('DOMContentLoaded', randomizeFishPosition);
-    window.addEventListener('resize', randomizeFishPosition);
-    document.querySelector('.swimming-fish').addEventListener('animationiteration', randomizeFishPosition);
   </script>
 </body>
 </html>
