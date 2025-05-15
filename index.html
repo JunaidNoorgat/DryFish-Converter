@@ -3,122 +3,125 @@
 <head>
   <meta charset="UTF-8">
   <title>Dry Fish Converter</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      padding: 0;
-      background: linear-gradient(to right, #a1c4fd, #c2e9fb);
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f9fafb;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      color: #333;
     }
 
-    .converter-card {
-      background: white;
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    .container {
+      background-color: #ffffff;
+      padding: 30px 20px;
+      border-radius: 12px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
       width: 100%;
       max-width: 400px;
-      transition: transform 0.3s ease;
     }
 
-    .converter-card:hover {
-      transform: scale(1.02);
-    }
-
-    h2 {
+    h1 {
       text-align: center;
-      color: #333;
       margin-bottom: 20px;
+      color: #2c3e50;
     }
 
     label {
-      margin-top: 15px;
       display: block;
-      color: #555;
-      font-weight: bold;
+      margin: 15px 0 5px;
+      font-weight: 500;
     }
 
     input {
       width: 100%;
-      padding: 12px;
-      margin-top: 5px;
-      border-radius: 10px;
+      padding: 10px;
+      border-radius: 6px;
       border: 1px solid #ccc;
       font-size: 16px;
-      box-sizing: border-box;
     }
 
     button {
+      margin-top: 20px;
       width: 100%;
       padding: 12px;
-      margin-top: 15px;
-      background-color: #2196f3;
-      border: none;
+      background-color: #3498db;
       color: white;
-      border-radius: 10px;
+      border: none;
+      border-radius: 6px;
       font-size: 16px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: background-color 0.2s ease;
     }
 
     button:hover {
-      background-color: #1976d2;
+      background-color: #2980b9;
     }
 
     .result {
       margin-top: 20px;
-      padding: 15px;
-      background-color: #f1f1f1;
-      border-radius: 10px;
       font-size: 18px;
+      font-weight: 500;
       text-align: center;
-      color: #333;
+      color: #2d3436;
+    }
+
+    @media (max-height: 500px) {
+      body {
+        align-items: flex-start;
+        padding-top: 20px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="converter-card">
-    <h2>🐟 Dry Fish Converter</h2>
 
-    <label for="grams">Grams:</label>
-    <input type="number" id="grams" placeholder="e.g. 250">
+<div class="container">
+  <h1>Dry Fish Converter</h1>
 
-    <label for="rands">Rands (ZAR):</label>
-    <input type="number" id="rands" placeholder="e.g. 30">
+  <label for="grams">Grams:</label>
+  <input type="number" id="grams" placeholder="Enter grams" oninput="convertFromGrams()">
 
-    <button onclick="convertFromGrams()">Convert Grams to Rands</button>
-    <button onclick="convertFromRands()">Convert Rands to Grams</button>
+  <label for="rands">Rands:</label>
+  <input type="number" id="rands" placeholder="Enter amount (R)" oninput="convertFromRands()">
 
-    <div class="result" id="result">Enter a value and click convert</div>
-  </div>
+  <div class="result" id="result"></div>
+</div>
 
-  <script>
-    const pricePerKg = 120;
-    const pricePerGram = pricePerKg / 1000;
+<script>
+  const pricePerKg = 120;
+  const pricePerGram = pricePerKg / 1000;
 
-    function convertFromGrams() {
-      const grams = parseFloat(document.getElementById('grams').value);
-      if (isNaN(grams) || grams < 0) {
-        alert("Please enter a valid number for grams.");
-        return;
-      }
-      const cost = grams * pricePerGram;
-      document.getElementById('result').innerText = `${grams}g of dry fish costs R${cost.toFixed(2)}`;
+  function convertFromGrams() {
+    const grams = parseFloat(document.getElementById('grams').value);
+    if (!isNaN(grams)) {
+      const rands = grams * pricePerGram;
+      document.getElementById('rands').value = rands.toFixed(2);
+      document.getElementById('result').textContent = `${grams}g = R${rands.toFixed(2)}`;
+    } else {
+      document.getElementById('result').textContent = '';
     }
+  }
 
-    function convertFromRands() {
-      const rands = parseFloat(document.getElementById('rands').value);
-      if (isNaN(rands) || rands < 0) {
-        alert("Please enter a valid number for rands.");
-        return;
-      }
+  function convertFromRands() {
+    const rands = parseFloat(document.getElementById('rands').value);
+    if (!isNaN(rands)) {
       const grams = rands / pricePerGram;
-      document.getElementById('result').innerText = `For R${rands.toFixed(2)} you get ${grams.toFixed(1)}g of dry fish`;
+      document.getElementById('grams').value = grams.toFixed(0);
+      document.getElementById('result').textContent = `R${rands.toFixed(2)} = ${grams.toFixed(0)}g`;
+    } else {
+      document.getElementById('result').textContent = '';
     }
-  </script>
+  }
+</script>
+
 </body>
 </html>
