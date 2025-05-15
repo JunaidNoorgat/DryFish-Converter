@@ -2,47 +2,56 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dry Fish Converter</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #00B4D8;
-      --secondary: #90E0EF;
-      --dark-bg: #03045E;
-      --light-bg: #f0f8ff;
-      --text-dark: #1c1c1c;
+      --primary: #023e8a; /* Dark blue */
+      --accent: #00b4d8;
+      --bg-dark: #001524;
       --text-light: #ffffff;
+      --input-bg: #0a2647;
+      --card-bg: #06283d;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
     body {
-      margin: 0;
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to right, #caf0f8, #90e0ef, #00b4d8);
+      background-color: var(--bg-dark);
+      color: var(--text-light);
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      transition: background 0.3s;
-      color: var(--text-dark);
+      background: linear-gradient(135deg, var(--bg-dark), var(--primary));
     }
 
     .container {
-      background: #ffffff;
-      padding: 30px 25px;
+      background: var(--card-bg);
+      padding: 40px 30px;
       border-radius: 16px;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
       width: 100%;
-      max-width: 400px;
+      max-width: 450px;
       text-align: center;
-      position: relative;
+    }
+
+    .logo {
+      width: 60px;
+      margin-bottom: 20px;
     }
 
     h1 {
-      margin-top: 0;
       font-weight: 600;
       font-size: 24px;
-      color: #03045E;
+      margin-bottom: 20px;
+      color: var(--accent);
     }
 
     label {
@@ -54,63 +63,30 @@
 
     input {
       width: 100%;
-      padding: 10px 12px;
+      padding: 10px;
       font-size: 16px;
-      margin-top: 5px;
+      margin-top: 6px;
       border-radius: 8px;
-      border: 1px solid #ccc;
+      border: none;
+      background-color: var(--input-bg);
+      color: white;
     }
 
     .result {
       margin-top: 25px;
-      background-color: #00B4D8;
+      background-color: var(--accent);
       color: white;
-      padding: 12px;
+      padding: 14px;
       border-radius: 8px;
       font-weight: 600;
       font-size: 18px;
-    }
-
-    .toggle-theme {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      border: none;
-      background: none;
-      font-size: 16px;
-      cursor: pointer;
-      color: #555;
-    }
-
-    .dark-mode {
-      background: var(--dark-bg);
-      color: var(--text-light);
-    }
-
-    .dark-mode .container {
-      background: #1a1a2e;
-      color: #eee;
-    }
-
-    .dark-mode input {
-      background: #333;
-      color: white;
-      border-color: #666;
-    }
-
-    .dark-mode .result {
-      background-color: #0077b6;
-    }
-
-    .dark-mode .toggle-theme {
-      color: white;
     }
   </style>
 </head>
 <body>
 
 <div class="container">
-  <button class="toggle-theme" onclick="toggleTheme()">🌙</button>
+  <img src="https://img.icons8.com/ios-filled/100/00b4d8/fish.png" alt="Fish Logo" class="logo"/>
   <h1>Dry Fish Converter</h1>
 
   <label for="grams">Grams:</label>
@@ -154,10 +130,6 @@
     } else {
       document.getElementById('result').textContent = 'Enter a value to convert';
     }
-  }
-
-  function toggleTheme() {
-    document.body.classList.toggle('dark-mode');
   }
 </script>
 
