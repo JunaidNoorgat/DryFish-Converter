@@ -14,9 +14,6 @@
       --white: #f8fafc;
       --gold: #facc15;
       --coral: #fb7185;
-      --mermaid-hair: #d946ef;
-      --mermaid-skin: #f9a8d4;
-      --mermaid-tail: #2dd4bf;
     }
 
     * {
@@ -74,7 +71,6 @@
       filter: drop-shadow(0 0 5px var(--coral));
     }
 
-    /* Fish banner container */
     .fish-banner-container {
       position: relative;
       width: 100%;
@@ -84,7 +80,6 @@
       z-index: 5;
     }
 
-    /* Swimming fish with banner */
     .swimming-fish {
       position: absolute;
       top: 50%;
@@ -109,10 +104,9 @@
     }
 
     .banner-fish {
-      width: 60px;
+      width: 40px;
       height: auto;
       order: 2;
-      animation: fishSwim 0.8s ease-in-out infinite alternate;
     }
 
     .converter {
@@ -136,35 +130,34 @@
                   inset 0 0 20px rgba(56, 189, 248, 0.2);
       width: 100%;
       position: relative;
-      overflow: hidden;
-    }
-
-    /* Mermaid elements - swimming across card */
-    .mermaid {
-      position: absolute;
-      width: 50px;
-      height: 50px;
-      z-index: 2;
-      opacity: 0.9;
-      pointer-events: none;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-    }
-
-    /* Fish elements */
-    .fish {
-      position: absolute;
-      width: 40px;
-      height: 40px;
-      z-index: 2;
-      opacity: 0.8;
-      pointer-events: none;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
     }
 
     .input-group {
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
       position: relative;
-      z-index: 3;
+    }
+
+    .preset-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .preset-btn {
+      background: rgba(56, 189, 248, 0.2);
+      color: var(--light-blue);
+      border: 1px solid var(--sky-blue);
+      border-radius: 20px;
+      padding: 8px 15px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .preset-btn:hover {
+      background: rgba(56, 189, 248, 0.4);
+      transform: translateY(-2px);
     }
 
     label {
@@ -187,8 +180,6 @@
       border: 2px solid var(--gold);
       transition: all 0.3s ease;
       box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
-      position: relative;
-      z-index: 3;
     }
 
     input:focus {
@@ -198,39 +189,9 @@
       background-color: rgba(15, 23, 42, 0.9);
     }
 
-    /* Preset buttons */
-    .preset-buttons {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.8rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .preset-btn {
-      padding: 0.8rem;
-      background-color: rgba(56, 189, 248, 0.2);
-      color: var(--light-blue);
-      border: 1px solid var(--sky-blue);
-      border-radius: 0.6rem;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      text-align: center;
-    }
-
-    .preset-btn:hover {
-      background-color: rgba(56, 189, 248, 0.4);
-      transform: translateY(-2px);
-    }
-
-    .preset-btn:active {
-      transform: translateY(0);
-    }
-
     .price-display {
       text-align: center;
-      margin-top: 1.5rem;
+      margin-top: 2rem;
       padding: 1.2rem;
       background-color: rgba(15, 23, 42, 0.6);
       border-radius: 0.8rem;
@@ -239,7 +200,6 @@
       color: var(--light-blue);
       font-weight: 600;
       position: relative;
-      z-index: 3;
     }
 
     @keyframes fadeIn {
@@ -247,37 +207,9 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Fish swimming animation */
     @keyframes swimAcross {
       0% { transform: translateX(-150px) translateY(-50%); }
-      50% { transform: translateX(50vw) translateY(calc(-50% + 20px)); }
       100% { transform: translateX(calc(100vw + 150px)) translateY(-50%); }
-    }
-
-    /* Fish swimming motion */
-    @keyframes fishSwim {
-      0% { transform: translateY(0) rotate(-5deg); }
-      100% { transform: translateY(-5px) rotate(5deg); }
-    }
-
-    /* Mermaid swimming animation */
-    @keyframes swimMermaid {
-      0% { 
-        transform: 
-          translateX(var(--start-x)) 
-          translateY(var(--start-y)) 
-          rotate(var(--start-rot));
-        opacity: 0;
-      }
-      10% { opacity: 0.9; }
-      90% { opacity: 0.9; }
-      100% { 
-        transform: 
-          translateX(var(--end-x)) 
-          translateY(var(--end-y)) 
-          rotate(var(--end-rot));
-        opacity: 0;
-      }
     }
 
     @keyframes bounce {
@@ -321,21 +253,11 @@
       }
 
       .banner-fish {
-        width: 50px;
-      }
-
-      .mermaid {
-        width: 40px;
-        height: 40px;
-      }
-
-      .fish {
-        width: 30px;
-        height: 30px;
+        width: 35px;
       }
 
       .preset-buttons {
-        grid-template-columns: 1fr;
+        justify-content: center;
       }
     }
 
@@ -364,17 +286,12 @@
       }
 
       .banner-fish {
-        width: 40px;
+        width: 30px;
       }
 
-      .mermaid {
-        width: 35px;
-        height: 35px;
-      }
-
-      .fish {
-        width: 25px;
-        height: 25px;
+      .preset-btn {
+        padding: 6px 12px;
+        font-size: 0.8rem;
       }
     }
   </style>
@@ -384,7 +301,6 @@
     <h1>Dry Fish Converter</h1>
   </header>
 
-  <!-- Fish banner area -->
   <div class="fish-banner-container">
     <div class="swimming-fish">
       <div class="banner-text">@Junbunz2025</div>
@@ -394,39 +310,30 @@
         <circle cx="160" cy="45" r="5" fill="#1e3a8a"/>
         <path d="M20,50 Q25,40 30,50 Q25,60 20,50" fill="#1e3a8a"/>
         <path d="M60,45 L40,45 L30,50 L40,55 L60,55" fill="#fb7185"/>
-        <path d="M140,60 Q135,55 130,60 Q135,65 140,60" fill="rgba(250,204,21,0.3)"/>
-        <path d="M130,55 Q125,50 120,55 Q125,60 130,55" fill="rgba(250,204,21,0.3)"/>
-        <path d="M120,65 Q115,60 110,65 Q115,70 120,65" fill="rgba(250,204,21,0.3)"/>
       </svg>
     </div>
   </div>
 
   <div class="converter">
-    <div class="converter-card" id="converterCard">
-      <!-- Mermaids will be added here by JavaScript -->
-      
-      <div class="converter-content">
-        <div class="input-group">
-          <label for="grams">Grams:</label>
-          <input type="number" id="grams" placeholder="Enter grams" oninput="convertToRands()" />
-        </div>
-
-        <!-- Preset buttons -->
+    <div class="converter-card">
+      <div class="input-group">
+        <label for="grams">Grams:</label>
+        <input type="number" id="grams" placeholder="Enter grams" oninput="convertToRands()" />
         <div class="preset-buttons">
           <button class="preset-btn" onclick="setGrams(120)">120g</button>
           <button class="preset-btn" onclick="setGrams(250)">250g</button>
           <button class="preset-btn" onclick="setGrams(420)">420g</button>
           <button class="preset-btn" onclick="setGrams(450)">450g</button>
         </div>
+      </div>
 
-        <div class="input-group">
-          <label for="rands">Rands (R):</label>
-          <input type="number" id="rands" placeholder="Enter amount in R" oninput="convertToGrams()" />
-        </div>
-        
-        <div class="price-display">
-          Current rate: R120 per kg (R0.12 per gram)
-        </div>
+      <div class="input-group">
+        <label for="rands">Rands (R):</label>
+        <input type="number" id="rands" placeholder="Enter amount in R" oninput="convertToGrams()" />
+      </div>
+      
+      <div class="price-display">
+        Current rate: R120 per kg (R0.12 per gram)
       </div>
     </div>
   </div>
@@ -447,79 +354,10 @@
       document.getElementById("grams").value = grams;
     }
 
-    // Set grams from preset button
     function setGrams(grams) {
       document.getElementById("grams").value = grams;
       convertToRands();
     }
-
-    // Create mermaids with random swimming patterns
-    function createMermaids() {
-      const card = document.getElementById('converterCard');
-      const cardRect = card.getBoundingClientRect();
-      
-      // Realistic mermaid SVG
-      const mermaidSVG = `
-        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <!-- Hair -->
-          <path d="M50,5 Q55,25 50,45 Q45,25 50,5 
-                   Q60,20 65,40 Q70,20 60,5
-                   Q70,15 75,30 Q80,15 70,5
-                   Q80,10 85,20 Q90,10 80,5
-                   Q90,5 95,10 Q100,5 90,5
-                   Q100,0 95,-5 Q90,0 80,5
-                   Q85,0 75,-5 Q70,0 60,5
-                   Q65,0 55,-5 Q50,0 50,5" 
-                fill="var(--mermaid-hair)"/>
-          <!-- Head -->
-          <circle cx="50" cy="40" r="15" fill="var(--mermaid-skin)"/>
-          <!-- Body -->
-          <path d="M50,55 Q55,65 50,75 Q45,65 50,55" fill="var(--mermaid-skin)"/>
-          <!-- Tail -->
-          <path d="M50,75 Q60,85 50,95 Q40,85 50,75" fill="var(--mermaid-tail)"/>
-          <!-- Eyes -->
-          <circle cx="43" cy="35" r="2" fill="#1e3a8a"/>
-          <circle cx="57" cy="35" r="2" fill="#1e3a8a"/>
-          <!-- Mouth -->
-          <path d="M45,45 Q50,50 55,45" fill="none" stroke="#1e3a8a" stroke-width="1"/>
-        </svg>
-      `;
-      
-      // Create 5 mermaids with different swimming patterns
-      for (let i = 0; i < 5; i++) {
-        const mermaid = document.createElement('div');
-        mermaid.className = 'mermaid';
-        mermaid.innerHTML = mermaidSVG;
-        
-        // Random start and end positions
-        const startFromLeft = Math.random() > 0.5;
-        const startFromTop = Math.random() > 0.5;
-        
-        const startX = startFromLeft ? -50 : cardRect.width + 50;
-        const startY = startFromTop ? -50 : cardRect.height + 50;
-        const endX = startFromLeft ? cardRect.width + 50 : -50;
-        const endY = startFromTop ? cardRect.height + 50 : -50;
-        
-        const duration = 5 + Math.random() * 5; // 5-10 seconds
-        const delay = i * 1.5; // Staggered start times
-        const startRot = Math.random() * 30 - 15;
-        const endRot = Math.random() * 30 - 15;
-        
-        // Apply styles
-        mermaid.style.setProperty('--start-x', `${startX}px`);
-        mermaid.style.setProperty('--start-y', `${startY}px`);
-        mermaid.style.setProperty('--end-x', `${endX}px`);
-        mermaid.style.setProperty('--end-y', `${endY}px`);
-        mermaid.style.setProperty('--start-rot', `${startRot}deg`);
-        mermaid.style.setProperty('--end-rot', `${endRot}deg`);
-        mermaid.style.animation = `swimMermaid ${duration}s linear ${delay}s infinite`;
-        
-        card.appendChild(mermaid);
-      }
-    }
-
-    // Initialize on load
-    document.addEventListener('DOMContentLoaded', createMermaids);
   </script>
 </body>
 </html>
