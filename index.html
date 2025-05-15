@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dry Fish Converter</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Pacifico&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
       --deep-blue: #0f172a;
@@ -16,58 +16,74 @@
       --coral: #fb7185;
     }
 
-    /* New banner styles */
+    /* Enhanced banner styles */
     .fish-banner {
       position: fixed;
       top: 20px;
-      left: -300px;
+      left: -350px;
       z-index: 1000;
       display: flex;
       align-items: center;
-      animation: swimAcross 15s linear infinite;
-      animation-delay: 10s;
+      animation: swimAcross 12s linear infinite;
+      animation-delay: 5s;
       opacity: 0;
+      filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3));
     }
 
     .banner-fish {
-      width: 80px;
-      height: 50px;
-      filter: drop-shadow(0 0 5px var(--gold));
+      width: 70px;
+      height: 45px;
+      z-index: 2;
     }
 
     .banner-text {
-      font-family: 'Pacifico', cursive;
-      font-size: 1.5rem;
-      color: var(--gold);
-      background: rgba(30, 58, 138, 0.8);
-      padding: 0.5rem 1.5rem;
-      border-radius: 30px;
-      margin-left: -15px;
+      font-family: 'Roboto', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: var(--white);
+      background: linear-gradient(90deg, rgba(30,58,138,0.9) 0%, rgba(56,189,248,0.8) 100%);
+      padding: 0.6rem 1.8rem 0.6rem 2.2rem;
+      border-radius: 0 25px 25px 0;
+      margin-left: -25px;
       white-space: nowrap;
-      border: 2px dashed var(--gold);
-      text-shadow: 0 0 5px rgba(0,0,0,0.5);
+      z-index: 1;
+      position: relative;
+      border: 1px solid rgba(56,189,248,0.5);
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+    }
+
+    .banner-text::before {
+      content: "";
+      position: absolute;
+      left: -10px;
+      top: 0;
+      bottom: 0;
+      width: 20px;
+      background: linear-gradient(90deg, rgba(30,58,138,0.9) 0%, rgba(56,189,248,0.8) 100%);
+      transform: skewX(-15deg);
+      z-index: -1;
     }
 
     @keyframes swimAcross {
       0% {
-        left: -300px;
+        left: -350px;
         opacity: 0;
         transform: translateY(0);
       }
       10% {
         opacity: 1;
       }
-      80% {
+      85% {
         opacity: 1;
       }
       100% {
         left: 100vw;
         opacity: 0;
-        transform: translateY(-10px);
+        transform: translateY(-5px);
       }
     }
 
-    /* Rest of your existing CSS remains exactly the same */
+    /* Rest of your existing CSS with header modifications */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -92,40 +108,13 @@
     header {
       display: flex;
       align-items: center;
-      gap: 1.5rem;
+      justify-content: center;
       padding: 2rem;
       background: linear-gradient(90deg, rgba(30,58,138,0.9) 0%, rgba(30,64,175,0.9) 100%);
       box-shadow: 0 4px 20px rgba(0,0,0,0.6);
       width: 100%;
-      justify-content: center;
       position: relative;
       border-bottom: 3px solid var(--gold);
-    }
-
-    .logo-container {
-      width: 110px;
-      height: 110px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: radial-gradient(circle, var(--navy) 0%, var(--deep-blue) 100%);
-      border-radius: 50%;
-      border: 3px solid var(--gold);
-      box-shadow: 0 0 25px rgba(250, 204, 21, 0.5);
-      padding: 15px;
-      transition: all 0.3s ease;
-    }
-
-    .logo-container:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 35px rgba(250, 204, 21, 0.7);
-    }
-
-    .fish-logo {
-      width: 100%;
-      height: auto;
-      filter: drop-shadow(0 0 10px rgba(250, 204, 21, 0.7));
-      animation: swim 3s ease-in-out infinite;
     }
 
     h1 {
@@ -133,17 +122,7 @@
       font-weight: 700;
       color: var(--white);
       text-shadow: 0 0 10px rgba(56, 189, 248, 0.7);
-      position: relative;
       letter-spacing: 1px;
-    }
-
-    h1::after {
-      content: "🐠";
-      position: absolute;
-      right: -45px;
-      font-size: 2.2rem;
-      animation: bounce 2s infinite;
-      filter: drop-shadow(0 0 5px var(--coral));
     }
 
     .converter {
@@ -234,53 +213,18 @@
       overflow: hidden;
     }
 
-    .price-display::before {
-      content: "";
-      position: absolute;
-      top: -10px;
-      right: -10px;
-      width: 30px;
-      height: 30px;
-      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M30,50 Q50,30 70,50 Q50,70 30,50" fill="%23facc15" opacity="0.3"/></svg>');
-      background-size: contain;
-    }
-
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(-20px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    @keyframes swim {
-      0%, 100% { transform: translateX(0) rotate(-5deg); }
-      50% { transform: translateX(10px) rotate(5deg); }
-    }
-
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0) scale(1); }
-      50% { transform: translateY(-10px) scale(1.1); }
-    }
-
     @media (max-width: 768px) {
       header {
-        flex-direction: column;
-        text-align: center;
-        gap: 1rem;
         padding: 1.5rem;
       }
       
       h1 {
         font-size: 2rem;
-      }
-      
-      h1::after {
-        right: -35px;
-        top: -5px;
-        font-size: 1.8rem;
-      }
-      
-      .logo-container {
-        width: 90px;
-        height: 90px;
       }
       
       .converter-card {
@@ -291,58 +235,37 @@
         top: 10px;
       }
       .banner-text {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
+        padding: 0.5rem 1.5rem 0.5rem 2rem;
       }
     }
 
     @media (max-width: 480px) {
-      h1::after {
-        right: -30px;
-        font-size: 1.5rem;
-      }
-      
       input {
         padding: 1rem;
       }
 
       .fish-banner {
-        display: none; /* Hide on very small screens */
+        display: none;
       }
     }
   </style>
 </head>
 <body>
-  <!-- New swimming fish banner -->
+  <!-- Enhanced swimming fish banner -->
   <div class="fish-banner">
     <svg class="banner-fish" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
       <path d="M180,50 Q160,10 100,20 Q60,25 40,50 Q20,75 60,80 Q100,85 160,90 Q180,90 180,50" 
             fill="#facc15" stroke="#1e3a8a" stroke-width="2"/>
       <circle cx="160" cy="45" r="4" fill="#1e3a8a"/>
+      <circle cx="160" cy="45" r="2" fill="#f8fafc"/>
       <path d="M20,50 Q25,40 30,50 Q25,60 20,50" fill="#1e3a8a"/>
+      <path d="M60,45 L40,45 L30,50 L40,55 L60,55" fill="#fb7185"/>
     </svg>
-    <div class="banner-text">junbunz™</div>
+    <div class="banner-text">@2025 JunBunz</div>
   </div>
 
   <header>
-    <div class="logo-container">
-      <svg class="fish-logo" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
-        <path d="M180,50 Q160,10 100,20 Q60,25 40,50 Q20,75 60,80 Q100,85 160,90 Q180,90 180,50" 
-              fill="url(#fishGradient)" stroke="#1e3a8a" stroke-width="3"/>
-        <circle cx="160" cy="45" r="5" fill="#1e3a8a"/>
-        <circle cx="160" cy="45" r="2" fill="#f8fafc"/>
-        <path d="M20,50 Q25,40 30,50 Q25,60 20,50" fill="#1e3a8a"/>
-        <path d="M60,45 L40,45 L30,50 L40,55 L60,55" fill="#fb7185"/>
-        <path d="M140,60 Q135,55 130,60 Q135,65 140,60" fill="rgba(250,204,21,0.3)"/>
-        <path d="M130,55 Q125,50 120,55 Q125,60 130,55" fill="rgba(250,204,21,0.3)"/>
-        <path d="M120,65 Q115,60 110,65 Q115,70 120,65" fill="rgba(250,204,21,0.3)"/>
-        <defs>
-          <linearGradient id="fishGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#facc15" />
-            <stop offset="100%" stop-color="#fbbf24" />
-          </linearGradient>
-        </defs>
-      </svg>
-    </div>
     <h1>Dry Fish Converter</h1>
   </header>
 
@@ -387,7 +310,7 @@
       const banner = document.querySelector('.fish-banner');
       banner.style.animation = 'none';
       void banner.offsetWidth; // Trigger reflow
-      banner.style.animation = 'swimAcross 15s linear infinite';
+      banner.style.animation = 'swimAcross 12s linear infinite';
       banner.style.animationDelay = '0s';
     }
 
@@ -397,15 +320,6 @@
       
       // Repeat every 10 seconds
       setInterval(animateBanner, 10000);
-      
-      // Logo micro-interaction
-      const logo = document.querySelector('.logo-container');
-      setTimeout(() => {
-        logo.style.transform = 'scale(1.1)';
-        setTimeout(() => {
-          logo.style.transform = 'scale(1)';
-        }, 300);
-      }, 500);
     });
   </script>
 </body>
