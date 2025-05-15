@@ -1,140 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dry Fish Converter</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
   <style>
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-      font-family: 'Inter', sans-serif;
     }
 
     body {
-      background: linear-gradient(135deg, #0d1b2a, #1b263b);
-      color: #ffffff;
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      color: #f1f5f9;
       height: 100vh;
+      padding: 2rem;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      animation: fadeIn 1s ease-in;
     }
 
-    @keyframes fadeIn {
-      0% {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .header {
+    header {
       display: flex;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 24px;
-      animation: slideIn 1s ease-out;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      animation: fadeIn 1.5s ease-in-out;
     }
 
-    .header img {
+    header img {
       width: 50px;
-      height: auto;
+      height: 50px;
     }
 
-    .header h1 {
-      font-size: 2.2rem;
-      color: #00b4d8;
+    h1 {
+      font-size: 2rem;
+      font-weight: 600;
+      color: #38bdf8;
     }
 
     .converter {
-      background-color: rgba(255, 255, 255, 0.05);
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      animation: slideUp 1.2s ease-in-out;
+    }
+
+    .section {
+      background-color: #1e3a8a;
+      border-radius: 1rem;
       padding: 2rem;
-      border-radius: 16px;
-      width: 100%;
-      max-width: 500px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-      animation: fadeInUp 1.2s ease-in-out;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    @keyframes fadeInUp {
-      0% {
-        opacity: 0;
-        transform: translateY(40px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .section:hover {
+      transform: scale(1.02);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.6);
     }
 
-    .converter label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 600;
-    }
-
-    .converter input {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 20px;
-      border: none;
-      border-radius: 8px;
-      background-color: #324b61;
-      color: #ffffff;
+    label {
       font-size: 1rem;
-      transition: background-color 0.3s;
+      margin-bottom: 0.5rem;
+      display: block;
+      color: #f8fafc;
     }
 
-    .converter input:focus {
+    input {
+      width: 100%;
+      padding: 0.8rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
       outline: none;
-      background-color: #3d5a80;
+      background-color: #0f172a;
+      color: #f8fafc;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .converter {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
-
 <body>
-  <div class="header">
-    <img src="https://cdn-icons-png.flaticon.com/512/2917/2917996.png" alt="Fish Logo">
+  <header>
+    <img src="https://cdn-icons-png.flaticon.com/512/616/616430.png" alt="Fish Logo">
     <h1>Dry Fish Converter</h1>
-  </div>
+  </header>
 
   <div class="converter">
-    <label for="grams">Grams:</label>
-    <input type="number" id="grams" placeholder="Enter grams" oninput="convertToRands()">
+    <div class="section">
+      <label for="grams">Grams:</label>
+      <input type="number" id="grams" placeholder="Enter grams" oninput="convertToRands()" />
+    </div>
 
-    <label for="rands">Rands:</label>
-    <input type="number" id="rands" placeholder="Enter amount (R)" oninput="convertToGrams()">
+    <div class="section">
+      <label for="rands">Rands (R):</label>
+      <input type="number" id="rands" placeholder="Enter amount in R" oninput="convertToGrams()" />
+    </div>
   </div>
 
   <script>
-    const pricePerKg = 180; // Rands per kilogram
+    const pricePerKg = 120; // R120 per 1000g
+    const pricePerGram = pricePerKg / 1000;
 
     function convertToRands() {
-      const grams = parseFloat(document.getElementById("grams").value);
-      if (!isNaN(grams)) {
-        const rands = (grams / 1000) * pricePerKg;
-        document.getElementById("rands").value = rands.toFixed(2);
-      }
+      const grams = document.getElementById("grams").value;
+      const rands = (grams * pricePerGram).toFixed(2);
+      document.getElementById("rands").value = rands;
     }
 
     function convertToGrams() {
-      const rands = parseFloat(document.getElementById("rands").value);
-      if (!isNaN(rands)) {
-        const grams = (rands / pricePerKg) * 1000;
-        document.getElementById("grams").value = grams.toFixed(0);
-      }
+      const rands = document.getElementById("rands").value;
+      const grams = (rands / pricePerGram).toFixed(2);
+      document.getElementById("grams").value = grams;
     }
   </script>
 </body>
-
 </html>
