@@ -16,49 +16,58 @@
       --coral: #fb7185;
     }
 
-    /* Enhanced banner styles */
-    .fish-banner {
+    /* Safe banner styles that won't overlap content */
+    .fish-banner-container {
       position: fixed;
-      top: 20px;
-      left: -350px;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
       z-index: 1000;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .fish-banner {
+      position: absolute;
+      top: 15px;
+      left: -300px;
       display: flex;
       align-items: center;
       animation: swimAcross 12s linear infinite;
       animation-delay: 5s;
       opacity: 0;
-      filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3));
+      filter: drop-shadow(0 2px 3px rgba(0,0,0,0.3));
     }
 
     .banner-fish {
-      width: 70px;
-      height: 45px;
+      width: 50px;
+      height: 30px;
       z-index: 2;
     }
 
     .banner-text {
       font-family: 'Roboto', sans-serif;
-      font-size: 1.3rem;
+      font-size: 1rem;
       font-weight: 500;
       color: var(--white);
       background: linear-gradient(90deg, rgba(30,58,138,0.9) 0%, rgba(56,189,248,0.8) 100%);
-      padding: 0.6rem 1.8rem 0.6rem 2.2rem;
-      border-radius: 0 25px 25px 0;
-      margin-left: -25px;
+      padding: 0.4rem 1.2rem 0.4rem 1.6rem;
+      border-radius: 0 20px 20px 0;
+      margin-left: -15px;
       white-space: nowrap;
       z-index: 1;
       position: relative;
       border: 1px solid rgba(56,189,248,0.5);
-      box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
     }
 
     .banner-text::before {
       content: "";
       position: absolute;
-      left: -10px;
+      left: -8px;
       top: 0;
       bottom: 0;
-      width: 20px;
+      width: 16px;
       background: linear-gradient(90deg, rgba(30,58,138,0.9) 0%, rgba(56,189,248,0.8) 100%);
       transform: skewX(-15deg);
       z-index: -1;
@@ -66,24 +75,22 @@
 
     @keyframes swimAcross {
       0% {
-        left: -350px;
+        left: -300px;
         opacity: 0;
-        transform: translateY(0);
       }
-      10% {
+      15% {
         opacity: 1;
       }
       85% {
         opacity: 1;
       }
       100% {
-        left: 100vw;
+        left: calc(100% + 300px);
         opacity: 0;
-        transform: translateY(-5px);
       }
     }
 
-    /* Rest of your existing CSS with header modifications */
+    /* Mobile-first styles with safe margins */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -102,77 +109,49 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      animation: fadeIn 1.5s ease-in-out;
+      padding-top: 60px; /* Space for fish banner */
     }
 
     header {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-      background: linear-gradient(90deg, rgba(30,58,138,0.9) 0%, rgba(30,64,175,0.9) 100%);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.6);
       width: 100%;
+      padding: 1.5rem;
+      background: linear-gradient(90deg, rgba(30,58,138,0.9) 0%, rgba(30,64,175,0.9) 100%);
+      text-align: center;
+      border-bottom: 2px solid var(--gold);
       position: relative;
-      border-bottom: 3px solid var(--gold);
+      z-index: 100;
     }
 
     h1 {
-      font-size: 2.5rem;
+      font-size: 1.8rem;
       font-weight: 700;
       color: var(--white);
-      text-shadow: 0 0 10px rgba(56, 189, 248, 0.7);
-      letter-spacing: 1px;
+      margin: 0;
     }
 
     .converter {
       flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 2rem;
       width: 100%;
-      max-width: 500px;
+      padding: 1.5rem;
+      max-width: 100%;
     }
 
     .converter-card {
       background: linear-gradient(145deg, var(--navy), #1e40af);
-      border-radius: 1.5rem;
-      padding: 3rem;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.7),
-                  0 0 0 3px var(--gold),
-                  inset 0 0 20px rgba(56, 189, 248, 0.2);
+      border-radius: 1rem;
+      padding: 1.5rem;
       width: 100%;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .converter-card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.08"><path d="M30,50 Q50,30 70,50 Q50,70 30,50" fill="%23facc15"/></svg>');
-      background-size: 80px;
-      z-index: 0;
-    }
-
-    .converter-content {
-      position: relative;
-      z-index: 1;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      border: 2px solid var(--gold);
     }
 
     .input-group {
-      margin-bottom: 2rem;
-      position: relative;
+      margin-bottom: 1.5rem;
     }
 
     label {
-      font-size: 1.2rem;
-      margin-bottom: 0.8rem;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
       display: block;
       color: var(--white);
       font-weight: 600;
@@ -180,89 +159,73 @@
 
     input {
       width: 100%;
-      padding: 1.1rem;
-      font-size: 1.1rem;
+      padding: 0.9rem;
+      font-size: 1rem;
       border: none;
-      border-radius: 0.8rem;
-      margin-top: 0.5rem;
+      border-radius: 0.7rem;
       background-color: rgba(15, 23, 42, 0.8);
       color: var(--white);
       border: 2px solid var(--gold);
-      transition: all 0.3s ease;
-      box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
     }
 
     input:focus {
       outline: none;
-      box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.3),
-                  inset 0 2px 5px rgba(0,0,0,0.2);
-      background-color: rgba(15, 23, 42, 0.9);
+      box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.3);
     }
 
     .price-display {
       text-align: center;
-      margin-top: 2rem;
-      padding: 1.2rem;
+      margin-top: 1.5rem;
+      padding: 1rem;
       background-color: rgba(15, 23, 42, 0.6);
-      border-radius: 0.8rem;
-      font-size: 1.1rem;
-      border: 2px dashed var(--gold);
-      color: var(--light-blue);
-      font-weight: 600;
-      position: relative;
-      overflow: hidden;
+      border-radius: 0.7rem;
+      font-size: 1rem;
+      border: 1px dashed var(--gold);
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @media (max-width: 768px) {
-      header {
-        padding: 1.5rem;
+    @media (min-width: 768px) {
+      body {
+        padding-top: 0;
       }
       
-      h1 {
-        font-size: 2rem;
+      .fish-banner-container {
+        height: 80px;
       }
       
-      .converter-card {
-        padding: 2rem;
-      }
-
       .fish-banner {
-        top: 10px;
+        top: 20px;
       }
+      
+      .banner-fish {
+        width: 60px;
+        height: 36px;
+      }
+      
       .banner-text {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
         padding: 0.5rem 1.5rem 0.5rem 2rem;
       }
-    }
-
-    @media (max-width: 480px) {
-      input {
-        padding: 1rem;
-      }
-
-      .fish-banner {
-        display: none;
+      
+      .converter {
+        max-width: 500px;
+        padding: 2rem;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Enhanced swimming fish banner -->
-  <div class="fish-banner">
-    <svg class="banner-fish" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
-      <path d="M180,50 Q160,10 100,20 Q60,25 40,50 Q20,75 60,80 Q100,85 160,90 Q180,90 180,50" 
-            fill="#facc15" stroke="#1e3a8a" stroke-width="2"/>
-      <circle cx="160" cy="45" r="4" fill="#1e3a8a"/>
-      <circle cx="160" cy="45" r="2" fill="#f8fafc"/>
-      <path d="M20,50 Q25,40 30,50 Q25,60 20,50" fill="#1e3a8a"/>
-      <path d="M60,45 L40,45 L30,50 L40,55 L60,55" fill="#fb7185"/>
-    </svg>
-    <div class="banner-text">@2025 JunBunz</div>
+  <!-- Dedicated container for fish banner that won't interfere with content -->
+  <div class="fish-banner-container">
+    <div class="fish-banner">
+      <svg class="banner-fish" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+        <path d="M180,50 Q160,10 100,20 Q60,25 40,50 Q20,75 60,80 Q100,85 160,90 Q180,90 180,50" 
+              fill="#facc15" stroke="#1e3a8a" stroke-width="2"/>
+        <circle cx="160" cy="45" r="4" fill="#1e3a8a"/>
+        <circle cx="160" cy="45" r="2" fill="#f8fafc"/>
+        <path d="M20,50 Q25,40 30,50 Q25,60 20,50" fill="#1e3a8a"/>
+      </svg>
+      <div class="banner-text">@2025 JunBunz</div>
+    </div>
   </div>
 
   <header>
@@ -271,20 +234,18 @@
 
   <div class="converter">
     <div class="converter-card">
-      <div class="converter-content">
-        <div class="input-group">
-          <label for="grams">Grams:</label>
-          <input type="number" id="grams" placeholder="Enter grams" oninput="convertToRands()" />
-        </div>
+      <div class="input-group">
+        <label for="grams">Grams:</label>
+        <input type="number" id="grams" placeholder="Enter grams" oninput="convertToRands()" />
+      </div>
 
-        <div class="input-group">
-          <label for="rands">Rands (R):</label>
-          <input type="number" id="rands" placeholder="Enter amount in R" oninput="convertToGrams()" />
-        </div>
-        
-        <div class="price-display">
-          Current rate: R120 per kg (R0.12 per gram)
-        </div>
+      <div class="input-group">
+        <label for="rands">Rands (R):</label>
+        <input type="number" id="rands" placeholder="Enter amount in R" oninput="convertToGrams()" />
+      </div>
+      
+      <div class="price-display">
+        Current rate: R120 per kg (R0.12 per gram)
       </div>
     </div>
   </div>
@@ -305,21 +266,17 @@
       document.getElementById("grams").value = grams;
     }
 
-    // Animate the banner fish on load and every 10 seconds
-    function animateBanner() {
-      const banner = document.querySelector('.fish-banner');
-      banner.style.animation = 'none';
-      void banner.offsetWidth; // Trigger reflow
-      banner.style.animation = 'swimAcross 12s linear infinite';
-      banner.style.animationDelay = '0s';
-    }
-
+    // Initialize banner animation
     document.addEventListener('DOMContentLoaded', () => {
-      // Initial animation
-      setTimeout(animateBanner, 1000);
+      const animateBanner = () => {
+        const banner = document.querySelector('.fish-banner');
+        banner.style.animation = 'none';
+        void banner.offsetWidth; // Trigger reflow
+        banner.style.animation = 'swimAcross 12s linear infinite';
+      };
       
-      // Repeat every 10 seconds
-      setInterval(animateBanner, 10000);
+      setTimeout(animateBanner, 1000);
+      setInterval(animateBanner, 12000);
     });
   </script>
 </body>
