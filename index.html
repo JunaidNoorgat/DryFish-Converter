@@ -4,112 +4,113 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dry Fish Converter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-light: #f9fafb;
-      --bg-dark: #121212;
-      --card-light: #ffffff;
-      --card-dark: #1e1e1e;
-      --text-light: #333;
-      --text-dark: #eee;
-      --primary: #3498db;
+      --primary: #00B4D8;
+      --secondary: #90E0EF;
+      --dark-bg: #03045E;
+      --light-bg: #f0f8ff;
+      --text-dark: #1c1c1c;
+      --text-light: #ffffff;
     }
 
     body {
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #caf0f8, #90e0ef, #00b4d8);
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      background: var(--bg-light);
-      color: var(--text-light);
-      transition: background 0.3s, color 0.3s;
-    }
-
-    .dark-mode {
-      background: var(--bg-dark);
+      transition: background 0.3s;
       color: var(--text-dark);
     }
 
     .container {
-      background-color: var(--card-light);
-      padding: 30px 20px;
-      border-radius: 12px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      background: #ffffff;
+      padding: 30px 25px;
+      border-radius: 16px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
       width: 100%;
       max-width: 400px;
       text-align: center;
-      transition: background-color 0.3s;
-    }
-
-    .dark-mode .container {
-      background-color: var(--card-dark);
-    }
-
-    img.logo {
-      width: 80px;
-      margin-bottom: 10px;
+      position: relative;
     }
 
     h1 {
-      margin: 0 0 20px;
+      margin-top: 0;
+      font-weight: 600;
+      font-size: 24px;
+      color: #03045E;
     }
 
     label {
       display: block;
-      margin: 15px 0 5px;
+      margin-top: 20px;
       font-weight: 500;
       text-align: left;
     }
 
     input {
       width: 100%;
-      padding: 10px;
-      border-radius: 6px;
+      padding: 10px 12px;
+      font-size: 16px;
+      margin-top: 5px;
+      border-radius: 8px;
       border: 1px solid #ccc;
-      font-size: 16px;
-    }
-
-    button {
-      margin-top: 20px;
-      width: 100%;
-      padding: 12px;
-      background-color: var(--primary);
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background-color 0.2s ease;
-    }
-
-    button:hover {
-      background-color: #2980b9;
     }
 
     .result {
-      margin-top: 20px;
+      margin-top: 25px;
+      background-color: #00B4D8;
+      color: white;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: 600;
       font-size: 18px;
-      font-weight: 500;
     }
 
     .toggle-theme {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      border: none;
       background: none;
-      color: inherit;
-      border: 1px solid #ccc;
-      padding: 6px 10px;
-      border-radius: 5px;
-      font-size: 14px;
-      margin-top: 15px;
+      font-size: 16px;
       cursor: pointer;
+      color: #555;
+    }
+
+    .dark-mode {
+      background: var(--dark-bg);
+      color: var(--text-light);
+    }
+
+    .dark-mode .container {
+      background: #1a1a2e;
+      color: #eee;
+    }
+
+    .dark-mode input {
+      background: #333;
+      color: white;
+      border-color: #666;
+    }
+
+    .dark-mode .result {
+      background-color: #0077b6;
+    }
+
+    .dark-mode .toggle-theme {
+      color: white;
     }
   </style>
 </head>
 <body>
 
 <div class="container">
-  <img src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png" alt="Fish Logo" class="logo" />
+  <button class="toggle-theme" onclick="toggleTheme()">🌙</button>
   <h1>Dry Fish Converter</h1>
 
   <label for="grams">Grams:</label>
@@ -118,8 +119,7 @@
   <label for="rands">Rands:</label>
   <input type="number" id="rands" placeholder="Enter amount (R)" oninput="convertFromRands()">
 
-  <div class="result" id="result"></div>
-  <button class="toggle-theme" onclick="toggleTheme()">🌙 Toggle Dark Mode</button>
+  <div class="result" id="result">Enter a value to convert</div>
 </div>
 
 <script>
@@ -141,7 +141,7 @@
       document.getElementById('rands').value = rands.toFixed(2);
       document.getElementById('result').textContent = `${grams}g = ${formatCurrency(rands)}`;
     } else {
-      document.getElementById('result').textContent = '';
+      document.getElementById('result').textContent = 'Enter a value to convert';
     }
   }
 
@@ -152,7 +152,7 @@
       document.getElementById('grams').value = grams.toFixed(0);
       document.getElementById('result').textContent = `${formatCurrency(rands)} = ${grams.toFixed(0)}g`;
     } else {
-      document.getElementById('result').textContent = '';
+      document.getElementById('result').textContent = 'Enter a value to convert';
     }
   }
 
