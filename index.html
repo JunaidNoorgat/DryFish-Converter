@@ -1,137 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dry Fish Converter</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --primary: #023e8a; /* Dark blue */
-      --accent: #00b4d8;
-      --bg-dark: #001524;
-      --text-light: #ffffff;
-      --input-bg: #0a2647;
-      --card-bg: #06283d;
-    }
-
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      font-family: 'Rubik', sans-serif;
     }
 
     body {
-      font-family: 'Poppins', sans-serif;
-      background-color: var(--bg-dark);
-      color: var(--text-light);
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      background: linear-gradient(145deg, #0f1c2e, #1f2f4a);
+      color: #ffffff;
       height: 100vh;
-      background: linear-gradient(135deg, var(--bg-dark), var(--primary));
+      display: flex;
+      flex-direction: column;
     }
 
-    .container {
-      background: var(--card-bg);
-      padding: 40px 30px;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-      width: 100%;
-      max-width: 450px;
-      text-align: center;
+    header {
+      display: flex;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: #152238;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     }
 
-    .logo {
-      width: 60px;
-      margin-bottom: 20px;
+    header img {
+      height: 40px;
+      margin-right: 1rem;
     }
 
-    h1 {
+    header h1 {
+      font-size: 1.8rem;
       font-weight: 600;
-      font-size: 24px;
-      margin-bottom: 20px;
-      color: var(--accent);
+    }
+
+    main {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .converter {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .converter-section {
+      background-color: #1c2b45;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    }
+
+    .converter-section h2 {
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+      color: #5dade2;
     }
 
     label {
       display: block;
-      margin-top: 20px;
-      font-weight: 500;
-      text-align: left;
+      margin: 1rem 0 0.5rem;
     }
 
     input {
       width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      margin-top: 6px;
+      padding: 0.75rem;
       border-radius: 8px;
       border: none;
-      background-color: var(--input-bg);
-      color: white;
+      font-size: 1rem;
+      background-color: #273d5b;
+      color: #fff;
     }
 
-    .result {
-      margin-top: 25px;
-      background-color: var(--accent);
-      color: white;
-      padding: 14px;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 18px;
+    input:focus {
+      outline: 2px solid #5dade2;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: #152238;
+      font-size: 0.9rem;
     }
   </style>
 </head>
+
 <body>
+  <header>
+    <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="Fish Logo" />
+    <h1>Dry Fish Converter</h1>
+  </header>
 
-<div class="container">
-  <img src="https://img.icons8.com/ios-filled/100/00b4d8/fish.png" alt="Fish Logo" class="logo"/>
-  <h1>Dry Fish Converter</h1>
+  <main>
+    <div class="converter">
+      <div class="converter-section">
+        <h2>Convert Grams to Rands</h2>
+        <label for="grams">Grams:</label>
+        <input type="number" id="grams" placeholder="Enter grams" oninput="convertGrams()" />
+        <p id="randsOutput"></p>
+      </div>
 
-  <label for="grams">Grams:</label>
-  <input type="number" id="grams" placeholder="Enter grams" oninput="convertFromGrams()">
+      <div class="converter-section">
+        <h2>Convert Rands to Grams</h2>
+        <label for="rands">Rands:</label>
+        <input type="number" id="rands" placeholder="Enter amount (R)" oninput="convertRands()" />
+        <p id="gramsOutput"></p>
+      </div>
+    </div>
+  </main>
 
-  <label for="rands">Rands:</label>
-  <input type="number" id="rands" placeholder="Enter amount (R)" oninput="convertFromRands()">
+  <footer>
+    &copy; 2025 Dry Fish Converter
+  </footer>
 
-  <div class="result" id="result">Enter a value to convert</div>
-</div>
+  <script>
+    const rate = 0.75; // Adjust your rate here
 
-<script>
-  const pricePerKg = 120;
-  const pricePerGram = pricePerKg / 1000;
-
-  function formatCurrency(amount) {
-    return new Intl.NumberFormat('en-ZA', {
-      style: 'currency',
-      currency: 'ZAR',
-      minimumFractionDigits: 2
-    }).format(amount);
-  }
-
-  function convertFromGrams() {
-    const grams = parseFloat(document.getElementById('grams').value);
-    if (!isNaN(grams)) {
-      const rands = grams * pricePerGram;
-      document.getElementById('rands').value = rands.toFixed(2);
-      document.getElementById('result').textContent = `${grams}g = ${formatCurrency(rands)}`;
-    } else {
-      document.getElementById('result').textContent = 'Enter a value to convert';
+    function convertGrams() {
+      const grams = parseFloat(document.getElementById('grams').value);
+      const rands = (grams * rate).toFixed(2);
+      document.getElementById('randsOutput').innerText = grams ? `R${rands}` : '';
     }
-  }
 
-  function convertFromRands() {
-    const rands = parseFloat(document.getElementById('rands').value);
-    if (!isNaN(rands)) {
-      const grams = rands / pricePerGram;
-      document.getElementById('grams').value = grams.toFixed(0);
-      document.getElementById('result').textContent = `${formatCurrency(rands)} = ${grams.toFixed(0)}g`;
-    } else {
-      document.getElementById('result').textContent = 'Enter a value to convert';
+    function convertRands() {
+      const rands = parseFloat(document.getElementById('rands').value);
+      const grams = (rands / rate).toFixed(2);
+      document.getElementById('gramsOutput').innerText = rands ? `${grams} g` : '';
     }
-  }
-</script>
-
+  </script>
 </body>
+
 </html>
