@@ -66,7 +66,7 @@
     }
 
     h1::after {
-      content: "🧜‍♀️";
+      content: "🐠";
       position: absolute;
       right: -45px;
       font-size: 2.2rem;
@@ -84,7 +84,7 @@
       z-index: 5;
     }
 
-    /* Swimming fish with banner - more realistic */
+    /* Swimming fish with banner */
     .swimming-fish {
       position: absolute;
       top: 50%;
@@ -139,7 +139,7 @@
       overflow: hidden;
     }
 
-    /* Mermaid elements - more realistic */
+    /* Mermaid elements - swimming across card */
     .mermaid {
       position: absolute;
       width: 50px;
@@ -150,7 +150,7 @@
       filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
     }
 
-    /* Fish elements - more realistic */
+    /* Fish elements */
     .fish {
       position: absolute;
       width: 40px;
@@ -247,7 +247,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* More realistic swimming animation */
+    /* Fish swimming animation */
     @keyframes swimAcross {
       0% { transform: translateX(-150px) translateY(-50%); }
       50% { transform: translateX(50vw) translateY(calc(-50% + 20px)); }
@@ -271,26 +271,6 @@
       }
       10% { opacity: 0.9; }
       90% { opacity: 0.9; }
-      100% { 
-        transform: 
-          translateX(var(--end-x)) 
-          translateY(var(--end-y)) 
-          rotate(var(--end-rot));
-        opacity: 0;
-      }
-    }
-
-    /* Fish swimming animation */
-    @keyframes swimFish {
-      0% { 
-        transform: 
-          translateX(var(--start-x)) 
-          translateY(var(--start-y)) 
-          rotate(var(--start-rot));
-        opacity: 0;
-      }
-      10% { opacity: 0.8; }
-      90% { opacity: 0.8; }
       100% { 
         transform: 
           translateX(var(--end-x)) 
@@ -423,7 +403,7 @@
 
   <div class="converter">
     <div class="converter-card" id="converterCard">
-      <!-- Mermaids and fish will be added here by JavaScript -->
+      <!-- Mermaids will be added here by JavaScript -->
       
       <div class="converter-content">
         <div class="input-group">
@@ -473,12 +453,12 @@
       convertToRands();
     }
 
-    // Create more realistic mermaids with varied swimming patterns
-    function createSeaCreatures() {
+    // Create mermaids with random swimming patterns
+    function createMermaids() {
       const card = document.getElementById('converterCard');
       const cardRect = card.getBoundingClientRect();
       
-      // More realistic mermaid SVG
+      // Realistic mermaid SVG
       const mermaidSVG = `
         <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <!-- Hair -->
@@ -505,77 +485,41 @@
         </svg>
       `;
       
-      // More realistic fish SVG
-      const fishSVG = `
-        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <path d="M80,50 Q60,10 20,50 Q60,90 80,50" fill="#7dd3fc" stroke="#1e3a8a" stroke-width="2"/>
-          <path d="M20,50 Q25,40 30,50 Q25,60 20,50" fill="#1e3a8a"/>
-          <circle cx="70" cy="45" r="5" fill="#1e3a8a"/>
-          <path d="M50,45 L40,45 L35,50 L40,55 L50,55" fill="#fb7185"/>
-          <path d="M60,60 Q55,55 50,60 Q55,65 60,60" fill="rgba(250,204,21,0.3)"/>
-          <path d="M55,40 Q50,45 55,50 Q60,45 55,40" fill="rgba(250,204,21,0.3)"/>
-        </svg>
-      `;
-      
-      // Create 4-5 mermaids with varied swimming patterns
+      // Create 5 mermaids with different swimming patterns
       for (let i = 0; i < 5; i++) {
         const mermaid = document.createElement('div');
         mermaid.className = 'mermaid';
         mermaid.innerHTML = mermaidSVG;
         
-        // Random properties for more natural movement
-        const startX = Math.random() > 0.5 ? -50 : cardRect.width + 50;
-        const startY = 10 + Math.random() * 80;
-        const endX = startX === -50 ? cardRect.width + 50 : -50;
-        const endY = startY + (Math.random() * 40 - 20);
-        const duration = 15 + Math.random() * 15;
-        const delay = Math.random() * 10;
+        // Random start and end positions
+        const startFromLeft = Math.random() > 0.5;
+        const startFromTop = Math.random() > 0.5;
+        
+        const startX = startFromLeft ? -50 : cardRect.width + 50;
+        const startY = startFromTop ? -50 : cardRect.height + 50;
+        const endX = startFromLeft ? cardRect.width + 50 : -50;
+        const endY = startFromTop ? cardRect.height + 50 : -50;
+        
+        const duration = 5 + Math.random() * 5; // 5-10 seconds
+        const delay = i * 1.5; // Staggered start times
         const startRot = Math.random() * 30 - 15;
         const endRot = Math.random() * 30 - 15;
         
         // Apply styles
         mermaid.style.setProperty('--start-x', `${startX}px`);
-        mermaid.style.setProperty('--start-y', `${startY}%`);
+        mermaid.style.setProperty('--start-y', `${startY}px`);
         mermaid.style.setProperty('--end-x', `${endX}px`);
-        mermaid.style.setProperty('--end-y', `${endY}%`);
+        mermaid.style.setProperty('--end-y', `${endY}px`);
         mermaid.style.setProperty('--start-rot', `${startRot}deg`);
         mermaid.style.setProperty('--end-rot', `${endRot}deg`);
         mermaid.style.animation = `swimMermaid ${duration}s linear ${delay}s infinite`;
         
         card.appendChild(mermaid);
       }
-      
-      // Create 8-10 fish with varied swimming patterns
-      for (let i = 0; i < 10; i++) {
-        const fish = document.createElement('div');
-        fish.className = 'fish';
-        fish.innerHTML = fishSVG;
-        
-        // Random properties for more natural movement
-        const startX = Math.random() > 0.5 ? -50 : cardRect.width + 50;
-        const startY = 10 + Math.random() * 80;
-        const endX = startX === -50 ? cardRect.width + 50 : -50;
-        const endY = startY + (Math.random() * 40 - 20);
-        const duration = 8 + Math.random() * 8;
-        const delay = Math.random() * 10;
-        const startRot = Math.random() * 30 - 15;
-        const endRot = Math.random() * 30 - 15;
-        
-        // Apply styles
-        fish.style.setProperty('--start-x', `${startX}px`);
-        fish.style.setProperty('--start-y', `${startY}%`);
-        fish.style.setProperty('--end-x', `${endX}px`);
-        fish.style.setProperty('--end-y', `${endY}%`);
-        fish.style.setProperty('--start-rot', `${startRot}deg`);
-        fish.style.setProperty('--end-rot', `${endRot}deg`);
-        fish.style.animation = `swimFish ${duration}s linear ${delay}s infinite`;
-        
-        card.appendChild(fish);
-      }
     }
 
     // Initialize on load
-    document.addEventListener('DOMContentLoaded', createSeaCreatures);
+    document.addEventListener('DOMContentLoaded', createMermaids);
   </script>
 </body>
 </html>
